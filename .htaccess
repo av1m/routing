@@ -1,0 +1,12 @@
+Options -Indexes
+Options +FollowSymLinks
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # For API
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule api/(.*)$ app/api/api.php?request=$1 [QSA,NC,L]
+    # For Rewriting / Shorten URL
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ redirect.php?r=$1 [QSA,L]
+</IfModule>
