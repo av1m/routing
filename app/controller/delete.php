@@ -5,14 +5,13 @@ $errors = array();
 $shorten = null;
 
 // We need a id !
-if (_get('id')) {
+if (_get('id') || _get('short_code')) {
     // In all case we retrieve the the shorten url
     $shortener = new Shortener();
-    $shorten = $shortener->getById(_get('short_code'));
+    $shorten = _get('id') ? $shortener->getById(_get('id')) : $shortener->getByCode(_get('short_code'));
     try{
         if (!empty($shorten)) {
-            $shorten = $shorten[0];
-            $success = $shortener->delete(_get('short_code'));
+            $success = $shortener->deleteByCode($shorten[0]->short_code);
             if ($success >= 1){
                 header('Location: ../controller/list.php');
             } else {
@@ -20,7 +19,6 @@ if (_get('id')) {
                     if(confirm('An error has occurred')) document.location = '../controller/list.php';
                 </script>";
             }
-            
         } else {
             array_push($errors, "Short code does not appear to exist.");
         }
@@ -30,3 +28,5 @@ if (_get('id')) {
 } else {
     array_push($errors, "No short code was supplied");
 }
+
+_include('delete', array('titre' => 'Delete a shortened URL', 'errors' => $errors));

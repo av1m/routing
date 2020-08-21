@@ -22,6 +22,11 @@ class ShortenerDatabase
         return (new Database())->prepare("DELETE FROM " . self::TABLE . " WHERE `id` = :id", array("id" => $id));
     }
 
+    public function deleteByCode($shortCode)
+    {
+        return (new Database())->prepare("DELETE FROM " . self::TABLE . " WHERE `short_code` = :short_code", array("short_code" => $shortCode));
+    }
+
     public static function list()
     {
         return (new Database())->prepare("SELECT `id`, `long_url`, `short_code`, `hits`, `created` FROM " . self::TABLE, array());
@@ -104,10 +109,7 @@ class Shortener extends ShortenerDatabase
         }
 
         // check if the $shortCode is the same
-        if (!$same) {
-            // new ShortCode generated
-            $shortCode = $this->generateShortCode($shortCode);
-        }
+        if (!$same) $shortCode = $this->generateShortCode($shortCode); // new ShortCode generated
 
         // And we can update the row
         try {
@@ -140,9 +142,8 @@ class Shortener extends ShortenerDatabase
             // check if we found a shortcode
             if ($shortCode && !parent::getByCode($shortCode)) {
                 return $shortCode;
-            } else {
-                $shortCode = self::generateRandomString();
             }
+            $shortCode = $this->generateRandomString();
         }
     }
 
@@ -151,9 +152,7 @@ class Shortener extends ShortenerDatabase
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
+        for ($i = 0; $i < $length; $i++) $randomString .= $characters[rand(0, $charactersLength - 1)];
         return $randomString;
     }
 }

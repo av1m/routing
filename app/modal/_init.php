@@ -6,6 +6,13 @@ require_once("shortener.php");
 require_once('database.php');
 require_once('url.php');
 
+/*
+    SHOW ALL ERRORS
+*/
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /**
  * Check if the variable $_POST contains the params
  * and return $_POST['x'] to protect against web vulnerabilities

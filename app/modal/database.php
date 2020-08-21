@@ -2,11 +2,10 @@
 
 class Database
 {
-
     private $pdo;
-    private $host = 'localhost';
+    private $host = '127.0.0.1';
     private $dbname = 'routing';
-    private $user = 'root';
+    private $user = 'user';
     private $password = 'root';
 
     function _connect(){

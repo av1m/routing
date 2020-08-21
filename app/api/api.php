@@ -13,8 +13,8 @@ class API {
 
     public function __construct()
     {
-        $this->request = self::getRequest();
-        $this->params = self::getParams();
+        $this->request = $this->getRequest();
+        $this->params = $this->getParams();
         $this->shortener = new Shortener();
     }
 
@@ -36,7 +36,8 @@ class API {
     }
 
     private function getParams(){
-        $params = $_GET; unset($params["request"]);
+        $params = $_GET; 
+        unset($params["request"]);
         return $params;
     }
 
@@ -78,7 +79,7 @@ class API {
             415 => 'Unsupported Media Type',  
             416 => 'Requested Range Not Satisfiable',  
             417 => 'Expectation Failed',
-            500 => 'Internal Server Error',  
+            500 => 'Internal Server Error',
             501 => 'Not Implemented',  
             502 => 'Bad Gateway',  
             503 => 'Service Unavailable',  
@@ -100,6 +101,8 @@ class API {
     }
 }
 
+try {
+    
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         new ApiGet();
@@ -120,4 +123,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
     default:
         http_response_code(405);
         break;
+}
+
+} catch (\Throwable $th) {
+    http_response_code(400);
 }

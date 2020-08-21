@@ -5,14 +5,14 @@
 * Write the documentation
 * API
 
-## XX-XX-2019 - @avimimoun
+## XX-XX-2019
 
 * Adding delete button when you wan't to modify one element
 * Adding a redirection in the views of `list.php`
 * Adding a button in `list.php` that redirects to `create.php`
 * Adding card in all page `template.php`
 
-## 25-08-2019 - @avimimoun
+## 25-08-2019
 
 * Database: We can have duplicates for `longUrl` but not for` shortCode`
 * Create one ShortenURL page

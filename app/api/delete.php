@@ -7,20 +7,18 @@ class ApiDelete extends API {
 
     public function __construct(){
         parent::__construct();        
-        self::_init();
+        $this->_init();
     }
     
     protected function _init(){
-        // We check if we have a shortCode in $_GET['request']
-        if (_get('request')){
-            $query = $this->shortener->delete(_get('request'));
-            if ($query >= 1){
-                parent::deliver_response(
-                    array('status' => '200')
-                );   
-            } else {
-                parent::deliver_response(array('status' => 404));
-            }
+        $query = 0;
+        if (key_exists('short_code', $this->params)) {
+            $query = $this->shortener->deleteByCode(htmlspecialchars($this->params['short_code']));
+        } else if (key_exists('id', $this->params)) {
+            $query = $this->shortener->delete(htmlspecialchars($this->params['id']));
+        } else parent::deliver_response(array('status' => 400));
+        if ($query >= 1){
+            parent::deliver_response(array('status' => '204'));   
         } else {
             parent::deliver_response(array('status' => 404));
         }

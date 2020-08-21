@@ -10,6 +10,7 @@
     </title>
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
